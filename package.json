@@ -1,6 +1,6 @@
 {
 	"name": "solid-motionone",
-	"version": "1.0.4",
+	"version": "1.1.0",
 	"description": "A tiny, performant animation library for SolidJS",
 	"license": "MIT",
 	"author": "Damian Tarnawski <gthetarnav@gmail.com>; David Di Biase <dave.dibiase@gmail.com>",
@@ -13,9 +13,10 @@
 	"scripts": {
 		"prepublishOnly": "pnpm build",
 		"build": "tsup",
-		"test": "pnpm run test:client && pnpm run test:ssr",
-		"test:client": "jest --config jest/jest.config.cjs",
-		"test:ssr": "SSR=true jest --config jest/jest.config.cjs",
+		"test": "vitest",
+		"test:ui": "vitest --ui",
+		"test:run": "vitest run",
+		"test:coverage": "vitest run --coverage",
 		"format": "prettier --cache -w .",
 		"lint": "pnpm run lint:code & pnpm run lint:types",
 		"lint:code": "eslint --ignore-path .gitignore --max-warnings 0 src/**/*.{js,ts,tsx,jsx}",
@@ -54,10 +55,12 @@
 		"@babel/preset-typescript": "^7.23.3",
 		"@jest/types": "^29.6.3",
 		"@solidjs/testing-library": "^0.8.5",
+		"@testing-library/jest-dom": "^6.8.0",
 		"@types/jest": "^29.5.11",
 		"@types/node": "^20.10.6",
 		"@typescript-eslint/eslint-plugin": "^6.17.0",
 		"@typescript-eslint/parser": "^6.17.0",
+		"@vitest/ui": "^3.2.4",
 		"babel-jest": "^29.7.0",
 		"babel-preset-solid": "^1.8.6",
 		"enhanced-resolve-jest": "^1.1.0",
@@ -66,11 +69,14 @@
 		"eslint-plugin-no-only-tests": "^3.1.0",
 		"jest": "^29.7.0",
 		"jest-environment-jsdom": "^29.7.0",
+		"jsdom": "^26.1.0",
 		"prettier": "^3.1.1",
 		"solid-js": "^1.8.17",
 		"tsup": "^8.0.1",
 		"tsup-preset-solid": "^2.2.0",
-		"typescript": "^5.3.3"
+		"typescript": "^5.3.3",
+		"vite-plugin-solid": "^2.11.8",
+		"vitest": "^3.2.4"
 	},
 	"peerDependencies": {
 		"solid-js": "^1.8.0"

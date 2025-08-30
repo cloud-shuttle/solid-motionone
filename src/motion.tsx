@@ -17,6 +17,102 @@ const OPTION_KEYS = [
 	"variants",
 	"transition",
 	"exit",
+	"onMotionComplete",
+	// 🆕 Drag system options
+	"drag",
+	"dragConstraints",
+	"dragElastic",
+	"dragMomentum",
+	"dragSnapToOrigin",
+	"whileDrag",
+	"onDragStart",
+	"onDrag",
+	"onDragEnd",
+	// 🆕 Layout animation options
+	"layout",
+	"layoutId",
+	"layoutRoot",
+	"layoutScroll",
+	"layoutDependency",
+	// 🆕 Scroll integration options
+	"scroll",
+	"scrollContainer",
+	"scrollOffset",
+	"scrollOnce",
+	"scrollAmount",
+	"parallax",
+	"parallaxSpeed",
+	"parallaxOffset",
+	// 🆕 Advanced gesture options
+	"multiTouch",
+	"pinchZoom",
+	"minTouches",
+	"maxTouches",
+	"initialScale",
+	"initialRotation",
+	"minScale",
+	"maxScale",
+	"momentum",
+	"momentumDecay",
+	"whilePinch",
+	"onMultiTouchStart",
+	"onMultiTouchMove",
+	"onMultiTouchEnd",
+	"onPinchStart",
+	"onPinchMove",
+	"onPinchEnd",
+	// 🆕 Stagger and orchestration options
+	"stagger",
+	"staggerDirection",
+	"staggerChildren",
+	"staggerDelay",
+	"staggerDelayChildren",
+	"timeline",
+	"timelineDuration",
+	"timelineEasing",
+	"timelineRepeat",
+	"timelineRepeatDelay",
+	"orchestrate",
+	"orchestrateDelay",
+	"orchestrateStagger",
+	"orchestrateDirection",
+	"orchestrateFrom",
+	"orchestrateTo",
+	"onStaggerStart",
+	"onStaggerComplete",
+	"onTimelineStart",
+	"onTimelineUpdate",
+	"onTimelineComplete",
+	// 🆕 Phase 6: Advanced animation options
+	"spring",
+	"springStiffness",
+	"springDamping",
+	"springMass",
+	"springRestDelta",
+	"springRestSpeed",
+	"keyframes",
+	"keyframeEasing",
+	"keyframeOffset",
+	"variants",
+	"initial",
+	"animate",
+	"exit",
+	"whileHover",
+	"whileTap",
+	"whileFocus",
+	"whileDrag",
+	"whilePinch",
+	"custom",
+	"gestureAnimation",
+	"gestureVariants",
+	"onSpringStart",
+	"onSpringComplete",
+	"onKeyframeStart",
+	"onKeyframeComplete",
+	"onVariantStart",
+	"onVariantComplete",
+	"onGestureAnimationStart",
+	"onGestureAnimationEnd",
 ] as const
 
 const ATTR_KEYS = ["tag"] as const
@@ -48,6 +144,11 @@ export const MotionComponent = (
 				ref={(el: Element) => {
 					root = el
 					props.ref?.(el)
+					
+					// Connect onMotionComplete event handler
+					if (options.onMotionComplete) {
+						el.addEventListener("motioncomplete", options.onMotionComplete)
+					}
 				}}
 				component={props.tag || "div"}
 				style={combineStyle(props.style, style)}
@@ -80,6 +181,50 @@ export const MotionComponent = (
  * @example
  * ```tsx
  * <Motion.div hover={{ scale: 1.2 }} press={{ scale: 0.9 }}/>
+ * ```
+ *
+ * Drag animation props:
+ *
+ * - `drag` enable drag functionality
+ * - `dragConstraints` limit drag boundaries
+ * - `whileDrag` animate during drag
+ *
+ * @example
+ * ```tsx
+ * <Motion.div drag dragConstraints={{ left: 0, right: 300 }} whileDrag={{ scale: 1.1 }}/>
+ * ```
+ *
+ * Layout animation props:
+ *
+ * - `layout` enable layout animations
+ * - `layoutId` shared layout identifier
+ * - `layoutRoot` mark as layout root
+ *
+ * @example
+ * ```tsx
+ * <Motion.div layout layoutId="shared-element"/>
+ * ```
+ *
+ * Scroll integration props:
+ *
+ * - `scroll` enable scroll-based animations
+ * - `parallax` enable parallax effects
+ * - `scrollContainer` specify scroll container
+ *
+ * @example
+ * ```tsx
+ * <Motion.div scroll parallax={0.5} parallaxSpeed={0.3}/>
+ * ```
+ *
+ * Advanced gesture props:
+ *
+ * - `multiTouch` enable multi-touch gestures
+ * - `pinchZoom` enable pinch-to-zoom
+ * - `whilePinch` animate during pinch gestures
+ *
+ * @example
+ * ```tsx
+ * <Motion.div pinchZoom minScale={0.5} maxScale={3} whilePinch={{ scale: 1.1 }}/>
  * ```
  */
 export const Motion = new Proxy(MotionComponent, {
