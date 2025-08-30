@@ -4,44 +4,57 @@
 
 # solid-motionone
 
-A tiny, performant animation library for SolidJS with advanced features including drag, layout animations, scroll integration, advanced gestures, and orchestration.
+A tiny, performant animation library for SolidJS with advanced features including drag, layout animations, scroll integration, advanced gestures, orchestration, and cutting-edge graphics capabilities.
 
 ## ✨ Features
 
 ### 🎯 Core Animation
-- **Tiny & Performant**: Only 54kb gzipped
-- **TypeScript**: Full type safety
-- **SolidJS Native**: Built specifically for SolidJS reactivity
+- **Tiny & Performant**: Only 54kb gzipped (core), 189kb with all features
+- **TypeScript**: Full type safety with comprehensive interfaces
+- **SolidJS Native**: Built specifically for SolidJS reactivity patterns
+- **Motion One Powered**: Leverages the full power of Motion One under the hood
 
 ### 🖱️ Drag System (Phase 1)
-- **Drag Constraints**: Limit drag boundaries
-- **Drag Momentum**: Physics-based momentum
-- **Elastic Drag**: Smooth elastic behavior
-- **Drag Events**: Complete event handling
+- **Drag Constraints**: Limit drag boundaries with elastic behavior
+- **Drag Momentum**: Physics-based momentum with decay
+- **Multi-Axis Support**: X, Y, or both axis dragging
+- **Event Handling**: Complete drag lifecycle events
 
 ### 🎨 Layout Animations (Phase 2)
-- **FLIP Technique**: Smooth layout transitions
-- **Shared Elements**: Seamless element transitions
-- **LayoutGroup**: Coordinate layout animations
-- **Layout Detection**: Automatic layout change detection
+- **FLIP Technique**: Smooth layout transitions using FLIP animation
+- **Shared Elements**: Seamless element transitions between components
+- **LayoutGroup**: Coordinate layout animations across components
+- **Automatic Detection**: Layout change detection with MutationObserver
 
 ### 📜 Scroll Integration (Phase 3)
-- **Scroll Tracking**: Real-time scroll position
+- **Scroll Tracking**: Real-time scroll position monitoring
 - **Parallax Effects**: Smooth parallax animations
-- **Viewport Detection**: Enter/leave animations
-- **Scroll-Based Animations**: Trigger animations on scroll
+- **Viewport Detection**: Enter/leave animations based on viewport
+- **Scroll-Based Triggers**: Animation triggers on scroll events
 
 ### 👆 Advanced Gestures (Phase 4)
 - **Multi-Touch**: Multi-finger gesture recognition
 - **Pinch-to-Zoom**: Scale and rotation gestures
-- **Gesture Constraints**: Min/max scale and rotation
-- **Momentum**: Gesture momentum with decay
+- **Gesture Constraints**: Min/max scale and rotation limits
+- **Momentum**: Gesture momentum with natural decay
 
 ### 🎼 Orchestration (Phase 5)
 - **Stagger Animations**: Sequential element animations
 - **Timeline Sequencing**: Complex animation sequences
-- **Orchestration Controls**: Combined stagger and timeline
 - **Performance Optimized**: RAF batching and memory management
+- **Combined Controls**: Stagger and timeline orchestration
+
+### 🔧 Advanced Features (Phase 6-8)
+- **Animation Debugger**: Visual debugging tools for animations
+- **Accessibility**: ARIA support and reduced motion preferences
+- **Presets**: Pre-built animation presets for common use cases
+- **Sequences**: Complex animation sequences with precise timing
+
+### 🎨 Advanced Graphics (Phase 10)
+- **Canvas Integration**: HTML5 Canvas 2D and WebGL context support
+- **WebGL Support**: WebGL 1.0 and 2.0 rendering with shader compilation
+- **Particle System**: Dynamic particle creation with physics simulation
+- **3D Animation**: 3D transformation management with matrix operations
 
 ## 📦 Installation
 
@@ -169,6 +182,90 @@ import { LayoutGroup } from "solid-motionone"
 </Motion.div>
 ```
 
+### Canvas Integration
+```tsx
+<Motion.div
+  canvas
+  canvasWidth={300}
+  canvasHeight={200}
+  canvasContext="2d"
+  onCanvasReady={(canvas, context) => {
+    console.log('Canvas ready:', canvas);
+  }}
+  onCanvasRender={(context, deltaTime) => {
+    // Custom canvas rendering
+    context.fillStyle = 'red';
+    context.fillRect(0, 0, 100, 100);
+  }}
+>
+  Canvas Element
+</Motion.div>
+```
+
+### WebGL Support
+```tsx
+<Motion.div
+  webgl
+  webglVersion="2.0"
+  webglVertexShader={`
+    attribute vec2 position;
+    void main() {
+      gl_Position = vec4(position, 0.0, 1.0);
+    }
+  `}
+  webglFragmentShader={`
+    precision mediump float;
+    void main() {
+      gl_FragColor = vec4(1.0, 0.0, 0.0, 1.0);
+    }
+  `}
+  onWebGLReady={(gl, program) => {
+    console.log('WebGL ready:', gl, program);
+  }}
+>
+  WebGL Element
+</Motion.div>
+```
+
+### Particle System
+```tsx
+<Motion.div
+  particles
+  particleCount={100}
+  particleSize={{ min: 2, max: 8 }}
+  particleColor={['#ff6b6b', '#4ecdc4', '#45b7d1']}
+  particleEmission="continuous"
+  particleVelocity={{ x: 0, y: -2, z: 0 }}
+  particleGravity={{ x: 0, y: 0.1, z: 0 }}
+  onParticleCreate={(particle) => {
+    console.log('Particle created:', particle);
+  }}
+  onParticleUpdate={(particle, deltaTime) => {
+    // Custom particle update logic
+  }}
+>
+  Particle System Element
+</Motion.div>
+```
+
+### 3D Animation
+```tsx
+<Motion.div
+  threeD
+  threeDPerspective={1000}
+  threeDRotateX={45}
+  threeDRotateY={30}
+  threeDTranslateZ={100}
+  threeDScaleX={1.2}
+  threeDScaleY={0.8}
+  onThreeDUpdate={(matrix) => {
+    console.log('3D matrix updated:', matrix);
+  }}
+>
+  3D Animated Element
+</Motion.div>
+```
+
 ### Complex Combination
 ```tsx
 <Motion.div
@@ -196,6 +293,11 @@ import { LayoutGroup } from "solid-motionone"
   // Orchestration
   stagger={0.2}
   orchestrate
+  
+  // Advanced graphics
+  canvas
+  particles
+  threeD
 >
   Complex Animated Element
 </Motion.div>
@@ -257,6 +359,51 @@ import { LayoutGroup } from "solid-motionone"
 - `onTimelineUpdate` - Timeline update callback
 - `onTimelineComplete` - Timeline complete callback
 
+#### Canvas Integration
+- `canvas` - Enable canvas integration
+- `canvasWidth` - Canvas width
+- `canvasHeight` - Canvas height
+- `canvasContext` - Canvas context type ("2d" | "webgl" | "webgl2")
+- `onCanvasReady` - Canvas ready callback
+- `onCanvasResize` - Canvas resize callback
+- `onCanvasRender` - Canvas render callback
+
+#### WebGL Support
+- `webgl` - Enable WebGL support
+- `webglVersion` - WebGL version ("1.0" | "2.0")
+- `webglVertexShader` - Vertex shader source
+- `webglFragmentShader` - Fragment shader source
+- `webglAttributes` - WebGL attributes configuration
+- `webglUniforms` - WebGL uniforms configuration
+- `onWebGLReady` - WebGL ready callback
+- `onWebGLRender` - WebGL render callback
+
+#### Particle System
+- `particles` - Enable particle system
+- `particleCount` - Number of particles
+- `particleSize` - Particle size (number | { min, max })
+- `particleColor` - Particle color (string | string[] | object)
+- `particleEmission` - Emission type ("continuous" | "burst" | "explosion")
+- `particleVelocity` - Particle velocity configuration
+- `particleGravity` - Particle gravity configuration
+- `onParticleCreate` - Particle creation callback
+- `onParticleUpdate` - Particle update callback
+- `onParticleDestroy` - Particle destruction callback
+
+#### 3D Animation
+- `threeD` - Enable 3D animation
+- `threeDPerspective` - 3D perspective value
+- `threeDRotateX` - X-axis rotation
+- `threeDRotateY` - Y-axis rotation
+- `threeDRotateZ` - Z-axis rotation
+- `threeDTranslateX` - X-axis translation
+- `threeDTranslateY` - Y-axis translation
+- `threeDTranslateZ` - Z-axis translation
+- `threeDScaleX` - X-axis scale
+- `threeDScaleY` - Y-axis scale
+- `threeDScaleZ` - Z-axis scale
+- `onThreeDUpdate` - 3D matrix update callback
+
 ## 🧪 Testing
 
 ```bash
@@ -272,10 +419,22 @@ npm run test:coverage
 
 ## 📊 Performance
 
-- **Bundle Size**: 54kb (gzipped)
+- **Core Bundle**: 54kb gzipped (basic features)
+- **Full Bundle**: 189kb gzipped (all features included)
 - **Runtime Performance**: Optimized with RAF batching
-- **Memory Usage**: Efficient memory management
-- **TypeScript**: Full type safety
+- **Memory Usage**: Efficient memory management with automatic cleanup
+- **TypeScript**: Full type safety with comprehensive interfaces
+- **Build Time**: ~1.4 seconds
+
+## 🎨 Advanced Graphics Demo
+
+Check out our comprehensive demo showcasing all Phase 10 features:
+- **Canvas 2D Animation**: Interactive canvas animations
+- **WebGL Rendering**: WebGL 1.0 and 2.0 demonstrations
+- **Particle System**: Dynamic particle effects with controls
+- **3D Animation**: 3D transformation examples
+
+[View Demo](demo/phase10-advanced-features-demo.html)
 
 ## 🤝 Contributing
 
@@ -296,3 +455,5 @@ Built on top of [@motionone/dom](https://motion.dev/) with SolidJS integration.
 ---
 
 **solid-motionone** - Powerful animations for SolidJS applications! 🚀
+
+*Now with advanced graphics capabilities including Canvas, WebGL, particle systems, and 3D animations!*
