@@ -113,6 +113,27 @@ const OPTION_KEYS = [
 	"onVariantComplete",
 	"onGestureAnimationStart",
 	"onGestureAnimationEnd",
+	// Phase 7: Advanced Features
+	"debug",
+	"debugOptions",
+	"pauseOnFocus",
+	"resumeOnBlur",
+	"pauseOnHover",
+	"respectReducedMotion",
+	"reducedMotionAnimation",
+	"manualPause",
+	"manualResume",
+	"preset",
+	"presetOptions",
+	"sequence",
+	"sequenceOptions",
+	// 🆕 Phase 8: Enhanced Gestures
+	"gestureRecognition",
+	"advancedOrchestration",
+	// 🆕 Phase 9: Integration & Polish
+	"routerIntegration",
+	"formIntegration",
+	"animationInspector",
 ] as const
 
 const ATTR_KEYS = ["tag"] as const
@@ -147,7 +168,7 @@ export const MotionComponent = (
 					
 					// Connect onMotionComplete event handler
 					if (options.onMotionComplete) {
-						el.addEventListener("motioncomplete", options.onMotionComplete)
+						el.addEventListener("motioncomplete", options.onMotionComplete as EventListener)
 					}
 				}}
 				component={props.tag || "div"}

@@ -14,3 +14,16 @@ export {createTimelineController, createTimelineSegment, createTimelineConfig} f
 export {createOrchestrationController, createOrchestratedChildren, createStaggeredList, createTimelineSequence, createOrchestratedSequence} from "./orchestration/index.js"
 // 🆕 Phase 6: Advanced Animation Features
 export * from "./animations/index.js"
+
+// 🆕 Phase 7: Advanced Features
+export * from "./debug/index.js"
+export * from "./accessibility/index.js"
+export * from "./presets/index.js"
+export * from "./orchestration/sequences.js"
+
+// 🆕 Phase 8: Enhanced Gestures
+export * from "./gestures/recognition.js"
+export * from "./orchestration/advanced.js"
+
+// 🆕 Phase 9: Integration & Polish
+export * from "./integration/index.js"

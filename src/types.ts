@@ -401,11 +401,172 @@ declare module "@motionone/dom" {
 		orchestrateDirection?: "forward" | "reverse" | "from" | "from-center"
 		orchestrateFrom?: number
 		orchestrateTo?: number
+		// 🆕 Phase 6: Advanced animation properties
+		spring?: SpringConfig
+		springStiffness?: number
+		springDamping?: number
+		springMass?: number
+		springRestDelta?: number
+		springRestSpeed?: number
+		keyframes?: KeyframeConfig
+		keyframeEasing?: string | ((t: number) => number)
+		keyframeOffset?: number
+		whileHover?: motionone.VariantDefinition
+		whileTap?: motionone.VariantDefinition
+		whileFocus?: motionone.VariantDefinition
+		custom?: any
+		gestureAnimation?: GestureAnimationOptions
+		gestureVariants?: Record<string, motionone.VariantDefinition>
+		onSpringStart?: () => void
+		onSpringComplete?: () => void
+		onKeyframeStart?: () => void
+		onKeyframeComplete?: () => void
+		onVariantStart?: () => void
+		onVariantComplete?: () => void
+		onGestureAnimationStart?: () => void
+		onGestureAnimationEnd?: () => void
+		// 🆕 Phase 7: Advanced Features
+		debug?: boolean
+		debugOptions?: DebugOptions
+		pauseOnFocus?: boolean
+		resumeOnBlur?: boolean
+		pauseOnHover?: boolean
+		respectReducedMotion?: boolean
+		reducedMotionAnimation?: motionone.VariantDefinition
+		manualPause?: boolean
+		manualResume?: boolean
+		preset?: string | AnimationPreset
+		presetOptions?: PresetOptions
+		sequence?: AnimationSequence[]
+		sequenceOptions?: SequenceOptions
+		// 🆕 Phase 8: Enhanced Gestures
+		gestureRecognition?: GestureRecognitionOptions
+		advancedOrchestration?: AdvancedOrchestrationOptions
+		// 🆕 Phase 9: Integration & Polish
+		routerIntegration?: RouterIntegrationOptions
+		formIntegration?: FormIntegrationOptions
+		animationInspector?: AnimationInspectorOptions
 	}
 }
 
+// Phase 7: Advanced Features - Debugger System
+export interface DebugOptions {
+	showTimeline?: boolean
+	showValues?: boolean
+	showPerformance?: boolean
+	logLevel?: 'debug' | 'info' | 'warn' | 'error'
+	enableConsole?: boolean
+	enablePanel?: boolean
+	panelPosition?: 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right'
+}
+
+export interface DebugState {
+	isEnabled: boolean
+	element: HTMLElement | null
+	animationValues: Record<string, any>
+	performanceMetrics: PerformanceMetrics
+	timeline: TimelineEntry[]
+	isPaused: boolean
+}
+
+export interface PerformanceMetrics {
+	fps: number
+	memoryUsage: number
+	animationCount: number
+	lastUpdateTime: number
+}
+
+export interface TimelineEntry {
+	id: string
+	timestamp: number
+	type: 'start' | 'update' | 'complete' | 'pause' | 'resume'
+	property?: string
+	value?: any
+	duration?: number
+}
+
+export interface DebugEvent {
+	type: 'animation-start' | 'animation-update' | 'animation-complete' | 'performance-update'
+	element: HTMLElement
+	data: any
+	timestamp: number
+}
+
+// Phase 7: Advanced Features - Accessibility System
+export interface AccessibilityOptions {
+	pauseOnFocus?: boolean
+	resumeOnBlur?: boolean
+	pauseOnHover?: boolean
+	respectReducedMotion?: boolean
+	reducedMotionAnimation?: motionone.VariantDefinition
+	manualPause?: boolean
+	manualResume?: boolean
+}
+
+export interface AccessibilityState {
+	isPaused: boolean
+	prefersReducedMotion: boolean
+	hasFocus: boolean
+	isHovering: boolean
+}
+
+// Phase 7: Advanced Features - Preset System
+export interface AnimationPreset {
+	name: string
+	initial?: motionone.VariantDefinition
+	animate?: motionone.VariantDefinition
+	exit?: motionone.VariantDefinition
+	transition?: any
+	options?: Record<string, any>
+}
+
+export interface PresetOptions {
+	intensity?: number
+	duration?: number
+	easing?: string
+	delay?: number
+	stagger?: number
+}
+
+// Phase 7: Advanced Features - Enhanced Orchestration
+export interface AnimationSequence {
+	animation: motionone.VariantDefinition
+	duration?: number
+	delay?: number
+	easing?: string
+}
+
+export interface SequenceOptions {
+	sequence?: AnimationSequence[]
+	repeat?: number | boolean
+	repeatDelay?: number
+	repeatType?: 'loop' | 'reverse' | 'mirror'
+}
+
+export interface AnimationGroup {
+	stagger?: number
+	direction?: 'forward' | 'reverse' | 'random'
+	children: any
+}
+
+export interface GroupOptions {
+	stagger?: number
+	direction?: 'forward' | 'reverse' | 'random'
+	onGroupStart?: () => void
+	onGroupComplete?: () => void
+}
+
+export interface AdvancedOrchestrationOptions {
+	mode?: 'parallel' | 'sequential' | 'stagger'
+	children?: AnimationSequence[]
+	delay?: number
+	duration?: number
+	onOrchestrationStart?: () => void
+	onOrchestrationComplete?: () => void
+}
+
 // 🆕 Extended MotionComponentProps to include all gesture options
-export type MotionComponentProps = ParentProps<MotionEventHandlers & motionone.Options & DragOptions & LayoutOptions & ScrollOptions & MultiTouchOptions & PinchZoomOptions & StaggerOptions & TimelineOptions & OrchestrationOptions & SpringOptions & KeyframeOptions & VariantsOptions & AnimationControlOptions & GestureAnimationOptions>
+export type MotionComponentProps = ParentProps<MotionEventHandlers & motionone.Options & DragOptions & LayoutOptions & ScrollOptions & MultiTouchOptions & PinchZoomOptions & StaggerOptions & TimelineOptions & OrchestrationOptions & SpringOptions & KeyframeOptions & VariantsOptions & AnimationControlOptions & GestureAnimationOptions & DebugOptions & AccessibilityOptions & PresetOptions & SequenceOptions & GroupOptions & AdvancedOrchestrationOptions & GestureRecognitionOptions & RouterIntegrationOptions & FormIntegrationOptions & AnimationInspectorOptions>
 
 export type MotionComponent = {
 	// <Motion />
@@ -433,3 +594,164 @@ declare module "solid-js" {
 
 // export only here so the `JSX` import won't be shaken off the tree:
 export type E = JSX.Element
+
+// 🆕 Phase 8: Enhanced Gestures
+export interface GesturePattern {
+  type: 'swipe' | 'longPress' | 'doubleTap' | 'pinch' | 'rotate' | 'pan'
+  direction?: 'up' | 'down' | 'left' | 'right' | 'diagonal'
+  threshold?: number
+  duration?: number
+  distance?: number
+  velocity?: number
+}
+
+export interface GestureRecognitionOptions {
+  patterns: GesturePattern[]
+  enableSwipe?: boolean
+  enableLongPress?: boolean
+  enableDoubleTap?: boolean
+  enablePinch?: boolean
+  enableRotate?: boolean
+  enablePan?: boolean
+  swipeThreshold?: number
+  longPressDuration?: number
+  doubleTapDelay?: number
+  pinchThreshold?: number
+  rotateThreshold?: number
+  panThreshold?: number
+  onGestureStart?: (gesture: GesturePattern, event: PointerEvent) => void
+  onGestureUpdate?: (gesture: GesturePattern, event: PointerEvent, progress: number) => void
+  onGestureEnd?: (gesture: GesturePattern, event: PointerEvent) => void
+}
+
+export interface GestureRecognitionState {
+  isRecognizing: boolean
+  currentGesture: GesturePattern | null
+  progress: number
+  startTime: number
+  startPosition: { x: number; y: number }
+  currentPosition: { x: number; y: number }
+  velocity: { x: number; y: number }
+  distance: number
+  angle: number
+  scale: number
+  rotation: number
+}
+
+export interface AdvancedOrchestrationOptions {
+  // Gesture-based orchestration
+  gestureOrchestration?: boolean
+  gestureSequences?: Record<string, AnimationSequence[]>
+  gesturePresets?: Record<string, AnimationPreset>
+  
+  // Advanced coordination
+  coordinationGroups?: string[]
+  crossElementOrchestration?: boolean
+  elementDependencies?: Record<string, string[]>
+  
+  // Performance optimization
+  lazyLoading?: boolean
+  animationPooling?: boolean
+  memoryOptimization?: boolean
+  
+  // Advanced timing
+  adaptiveTiming?: boolean
+  performanceBasedAdjustment?: boolean
+  frameRateOptimization?: boolean
+}
+
+export interface GestureOrchestrationController {
+  registerGesture(element: HTMLElement, options: GestureRecognitionOptions): void
+  unregisterGesture(element: HTMLElement): void
+  triggerGesture(element: HTMLElement, gesture: GesturePattern): void
+  getGestureState(element: HTMLElement): GestureRecognitionState | null
+  coordinateGestures(elements: HTMLElement[], coordinationType: 'parallel' | 'sequential' | 'dependent'): void
+}
+
+// 🆕 Phase 9: Integration & Polish
+export interface RouterIntegrationOptions {
+  // Route transition animations
+  routeTransition?: boolean
+  routeTransitionDuration?: number
+  routeTransitionEasing?: string
+  routeTransitionDirection?: 'left' | 'right' | 'up' | 'down' | 'fade'
+  
+  // Route-specific animations
+  routeEnterAnimation?: motionone.VariantDefinition
+  routeExitAnimation?: motionone.VariantDefinition
+  routeSharedElements?: string[]
+  
+  // Router event handlers
+  onRouteEnter?: (route: string, element: HTMLElement) => void
+  onRouteExit?: (route: string, element: HTMLElement) => void
+  onRouteTransitionStart?: (from: string, to: string) => void
+  onRouteTransitionComplete?: (from: string, to: string) => void
+}
+
+export interface FormIntegrationOptions {
+  // Form validation animations
+  formValidation?: boolean
+  validationAnimation?: motionone.VariantDefinition
+  errorAnimation?: motionone.VariantDefinition
+  successAnimation?: motionone.VariantDefinition
+  
+  // Form field animations
+  fieldFocusAnimation?: motionone.VariantDefinition
+  fieldBlurAnimation?: motionone.VariantDefinition
+  fieldErrorAnimation?: motionone.VariantDefinition
+  fieldSuccessAnimation?: motionone.VariantDefinition
+  
+  // Form submission animations
+  submitAnimation?: motionone.VariantDefinition
+  loadingAnimation?: motionone.VariantDefinition
+  
+  // Form event handlers
+  onFieldFocus?: (field: HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement) => void
+  onFieldBlur?: (field: HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement) => void
+  onFieldError?: (field: HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement, error: string) => void
+  onFieldSuccess?: (field: HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement) => void
+  onFormSubmit?: (form: HTMLFormElement) => void
+  onFormValidation?: (form: HTMLFormElement, isValid: boolean) => void
+}
+
+export interface AnimationInspectorOptions {
+  // Inspector panel options
+  inspectorEnabled?: boolean
+  inspectorPosition?: 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right'
+  inspectorSize?: 'small' | 'medium' | 'large'
+  
+  // Inspector features
+  showAnimationTree?: boolean
+  showPerformanceMetrics?: boolean
+  showTimeline?: boolean
+  showProperties?: boolean
+  
+  // Inspector event handlers
+  onInspectorOpen?: () => void
+  onInspectorClose?: () => void
+  onAnimationSelect?: (animation: any) => void
+  onPropertyChange?: (property: string, value: any) => void
+}
+
+export interface IntegrationState {
+  // Router state
+  currentRoute: string | null
+  previousRoute: string | null
+  isTransitioning: boolean
+  
+  // Form state
+  activeForm: HTMLFormElement | null
+  focusedField: HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement | null
+  formErrors: Record<string, string>
+  formIsValid: boolean
+  
+  // Inspector state
+  inspectorOpen: boolean
+  selectedAnimation: any | null
+  inspectorMetrics: {
+    fps: number
+    memoryUsage: number
+    activeAnimations: number
+    totalElements: number
+  }
+}

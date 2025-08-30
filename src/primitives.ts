@@ -9,6 +9,15 @@ import {createScrollPosition, createParallaxEffect} from "./scroll/index.js"
 import {createAdvancedGestures} from "./gestures/advanced.js"
 import {createOrchestrationController, createStaggeredList, createTimelineSequence} from "./orchestration/index.js"
 import {createAdvancedAnimationController} from "./animations/advanced-controller.js"
+import { getGlobalDebugger, enableDebugging } from "./debug/debugger.js"
+import { createAccessibilityEffect } from "./accessibility/pause-resume.js"
+import { getPreset, applyPresetOptions } from "./presets/basic.js"
+import { createAnimationSequence } from "./orchestration/sequences.js"
+import { createGestureEffect } from "./gestures/recognition.js"
+import { createAdvancedOrchestrationEffect } from "./orchestration/advanced.js"
+import { createRouterIntegrationEffect } from "./integration/router.js"
+import { createFormIntegrationEffect } from "./integration/form.js"
+import { createAnimationInspectorEffect } from "./integration/inspector.js"
 
 /** @internal */
 export function createAndBindMotionState(
@@ -140,6 +149,111 @@ export function createAndBindMotionState(
 			onCleanup(() => {
 				advancedAnimationControls.reset()
 			})
+		}
+	})
+
+	// 🆕 Phase 7: Advanced Features - Debugger System
+	createEffect(() => {
+		const opts = options() as any
+		if (opts.debug) {
+			const debuggerInstance = getGlobalDebugger(opts.debugOptions)
+			// Debugger is automatically initialized and will track animations
+		}
+	})
+
+	// 🆕 Phase 7: Advanced Features - Accessibility System
+	createEffect(() => {
+		const opts = options() as any
+		if (opts.pauseOnFocus || opts.resumeOnBlur || opts.pauseOnHover || opts.respectReducedMotion) {
+			const accessibilityManager = createAccessibilityEffect(() => el() as HTMLElement, {
+				pauseOnFocus: opts.pauseOnFocus,
+				resumeOnBlur: opts.resumeOnBlur,
+				pauseOnHover: opts.pauseOnHover,
+				respectReducedMotion: opts.respectReducedMotion,
+				reducedMotionAnimation: opts.reducedMotionAnimation,
+				manualPause: opts.manualPause,
+				manualResume: opts.manualResume
+			})
+		}
+	})
+
+	// 🆕 Phase 7: Advanced Features - Preset System
+	createEffect(() => {
+		const opts = options() as any
+		if (opts.preset) {
+			const preset = typeof opts.preset === 'string' ? getPreset(opts.preset) : opts.preset
+			if (preset) {
+				const appliedPreset = applyPresetOptions(preset, opts.presetOptions)
+				
+				// Apply preset values to options
+				if (appliedPreset.initial && !opts.initial) {
+					opts.initial = appliedPreset.initial
+				}
+				if (appliedPreset.animate && !opts.animate) {
+					opts.animate = appliedPreset.animate
+				}
+				if (appliedPreset.exit && !opts.exit) {
+					opts.exit = appliedPreset.exit
+				}
+				if (appliedPreset.transition && !opts.transition) {
+					opts.transition = appliedPreset.transition
+				}
+			}
+		}
+	})
+
+	// 🆕 Phase 7: Advanced Features - Enhanced Orchestration
+	createEffect(() => {
+		const opts = options() as any
+		if (opts.sequence) {
+			const sequenceController = createAnimationSequence(opts.sequence, opts.sequenceOptions)
+			// Sequence controller is ready to be used
+		}
+	})
+
+	// 🆕 Phase 8: Enhanced Gestures - Gesture Recognition
+	createEffect(() => {
+		const opts = options() as any
+		if (opts.gestureRecognition && opts.gestureRecognition.patterns.length > 0) {
+			const gestureRecognizer = createGestureEffect(() => el() as HTMLElement, opts.gestureRecognition)
+			// Gesture recognizer is ready to be used
+		}
+	})
+
+	// 🆕 Phase 8: Enhanced Gestures - Advanced Orchestration
+	createEffect(() => {
+		const opts = options() as any
+		if (opts.advancedOrchestration) {
+			const orchestrationController = createAdvancedOrchestrationEffect(() => el() as HTMLElement, opts.advancedOrchestration)
+			// Advanced orchestration controller is ready to be used
+		}
+	})
+
+	// 🆕 Phase 9: Integration & Polish - Router Integration
+	createEffect(() => {
+		const opts = options() as any
+		if (opts.routerIntegration && opts.routerIntegration.routeTransition) {
+			const route = window.location.pathname
+			const routerManager = createRouterIntegrationEffect(() => el() as HTMLElement, route, opts.routerIntegration)
+			// Router integration manager is ready to be used
+		}
+	})
+
+	// 🆕 Phase 9: Integration & Polish - Form Integration
+	createEffect(() => {
+		const opts = options() as any
+		if (opts.formIntegration && opts.formIntegration.formValidation) {
+			const formManager = createFormIntegrationEffect(() => el() as HTMLElement, opts.formIntegration)
+			// Form integration manager is ready to be used
+		}
+	})
+
+	// 🆕 Phase 9: Integration & Polish - Animation Inspector
+	createEffect(() => {
+		const opts = options() as any
+		if (opts.animationInspector && opts.animationInspector.inspectorEnabled) {
+			const inspector = createAnimationInspectorEffect(() => el() as HTMLElement, opts.animationInspector)
+			// Animation inspector is ready to be used
 		}
 	})
 
