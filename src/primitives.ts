@@ -18,6 +18,7 @@ import { createAdvancedOrchestrationEffect } from "./orchestration/advanced.js"
 import { createRouterIntegrationEffect } from "./integration/router.js"
 import { createFormIntegrationEffect } from "./integration/form.js"
 import { createAnimationInspectorEffect } from "./integration/inspector.js"
+import { createCanvasEffect, createWebGLEffect, createParticleEffect } from "./canvas/index.js"
 
 /** @internal */
 export function createAndBindMotionState(
@@ -254,6 +255,43 @@ export function createAndBindMotionState(
 		if (opts.animationInspector && opts.animationInspector.inspectorEnabled) {
 			const inspector = createAnimationInspectorEffect(() => el() as HTMLElement, opts.animationInspector)
 			// Animation inspector is ready to be used
+		}
+	})
+
+	// 🆕 Phase 10: Advanced Features - Canvas Integration
+	createEffect(() => {
+		const opts = options() as any
+		if (opts.canvas) {
+			const canvas = createCanvasEffect(() => el() as HTMLElement, opts)
+			// Canvas integration is ready to be used
+		}
+	})
+
+	// 🆕 Phase 10: Advanced Features - WebGL Integration
+	createEffect(() => {
+		const opts = options() as any
+		if (opts.webgl) {
+			const canvas = el() as HTMLCanvasElement
+			const webgl = createWebGLEffect(() => canvas, opts)
+			// WebGL integration is ready to be used
+		}
+	})
+
+	// 🆕 Phase 10: Advanced Features - 3D Animation
+	// createEffect(() => {
+	// 	const opts = options() as any
+	// 	if (opts.threeD) {
+	// 		const threeD = createThreeDEffect(() => el() as HTMLElement, opts)
+	// 		// 3D animation is ready to be used
+	// 	}
+	// })
+
+	// 🆕 Phase 10: Advanced Features - Particle System
+	createEffect(() => {
+		const opts = options() as any
+		if (opts.particles) {
+			const particles = createParticleEffect(() => el() as HTMLElement, opts)
+			// Particle system is ready to be used
 		}
 	})
 

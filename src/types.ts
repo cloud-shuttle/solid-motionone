@@ -446,6 +446,72 @@ declare module "@motionone/dom" {
 		routerIntegration?: RouterIntegrationOptions
 		formIntegration?: FormIntegrationOptions
 		animationInspector?: AnimationInspectorOptions
+		// 🆕 Phase 10: Advanced Features
+		canvas?: boolean
+		canvasWidth?: number
+		canvasHeight?: number
+		canvasContext?: '2d' | 'webgl' | 'webgl2'
+		canvasPixelRatio?: number
+		canvasAntialias?: boolean
+		canvasAlpha?: boolean
+		canvasDepth?: boolean
+		canvasStencil?: boolean
+		canvasPreserveDrawingBuffer?: boolean
+		canvasPowerPreference?: 'default' | 'high-performance' | 'low-power'
+		canvasFailIfMajorPerformanceCaveat?: boolean
+		onCanvasReady?: (canvas: HTMLCanvasElement, context: CanvasRenderingContext2D | WebGLRenderingContext | WebGL2RenderingContext) => void
+		onCanvasResize?: (width: number, height: number) => void
+		onCanvasRender?: (context: CanvasRenderingContext2D | WebGLRenderingContext | WebGL2RenderingContext, deltaTime: number) => void
+		webgl?: boolean
+		webglVersion?: '1.0' | '2.0'
+		webglVertexShader?: string
+		webglFragmentShader?: string
+		webglAttributes?: Record<string, { size: number; type: number; normalized?: boolean; stride?: number; offset?: number }>
+		webglUniforms?: Record<string, { type: 'float' | 'int' | 'bool' | 'vec2' | 'vec3' | 'vec4' | 'mat2' | 'mat3' | 'mat4' | 'sampler2D' | 'samplerCube'; value: any }>
+		webglTextures?: Record<string, { source: HTMLImageElement | HTMLCanvasElement | HTMLVideoElement; target?: number; level?: number; internalFormat?: number; format?: number; type?: number }>
+		webglBlendMode?: 'add' | 'subtract' | 'reverse-subtract' | 'min' | 'max'
+		webglDepthTest?: boolean
+		webglCullFace?: 'front' | 'back' | 'front-and-back'
+		webglFrontFace?: 'cw' | 'ccw'
+		onWebGLReady?: (gl: WebGLRenderingContext | WebGL2RenderingContext, program: WebGLProgram) => void
+		onWebGLRender?: (gl: WebGLRenderingContext | WebGL2RenderingContext, program: WebGLProgram, deltaTime: number) => void
+		shader?: boolean
+		shaderType?: 'vertex' | 'fragment' | 'compute'
+		shaderSource?: string
+		shaderPrecision?: 'lowp' | 'mediump' | 'highp'
+		shaderExtensions?: string[]
+		shaderUniforms?: Record<string, ShaderUniform>
+		shaderAttributes?: Record<string, ShaderAttribute>
+		shaderVaryings?: Record<string, ShaderVarying>
+		onShaderCompile?: (shader: WebGLShader, success: boolean) => void
+		onShaderLink?: (program: WebGLProgram, success: boolean) => void
+		threeD?: boolean
+		threeDPerspective?: number
+		threeDRotateX?: number
+		threeDRotateY?: number
+		threeDRotateZ?: number
+		threeDTranslateX?: number
+		threeDTranslateY?: number
+		threeDTranslateZ?: number
+		threeDScaleX?: number
+		threeDScaleY?: number
+		threeDScaleZ?: number
+		threeDMatrix?: number[]
+		threeDMatrixAuto?: boolean
+		onThreeDUpdate?: (matrix: number[]) => void
+		particles?: boolean
+		particleCount?: number
+		particleSize?: number | { min: number; max: number }
+		particleColor?: string | string[] | { r: number; g: number; b: number; a: number }
+		particleVelocity?: { x: number; y: number; z: number } | { min: { x: number; y: number; z: number }; max: { x: number; y: number; z: number } }
+		particleLife?: number | { min: number; max: number }
+		particleGravity?: { x: number; y: number; z: number }
+		particleEmission?: 'continuous' | 'burst' | 'explosion'
+		particleEmissionRate?: number
+		particleEmissionBurst?: number
+		onParticleCreate?: (particle: Particle) => void
+		onParticleUpdate?: (particle: Particle, deltaTime: number) => void
+		onParticleDestroy?: (particle: Particle) => void
 	}
 }
 
@@ -566,7 +632,7 @@ export interface AdvancedOrchestrationOptions {
 }
 
 // 🆕 Extended MotionComponentProps to include all gesture options
-export type MotionComponentProps = ParentProps<MotionEventHandlers & motionone.Options & DragOptions & LayoutOptions & ScrollOptions & MultiTouchOptions & PinchZoomOptions & StaggerOptions & TimelineOptions & OrchestrationOptions & SpringOptions & KeyframeOptions & VariantsOptions & AnimationControlOptions & GestureAnimationOptions & DebugOptions & AccessibilityOptions & PresetOptions & SequenceOptions & GroupOptions & AdvancedOrchestrationOptions & GestureRecognitionOptions & RouterIntegrationOptions & FormIntegrationOptions & AnimationInspectorOptions>
+export type MotionComponentProps = ParentProps<MotionEventHandlers & motionone.Options & DragOptions & LayoutOptions & ScrollOptions & MultiTouchOptions & PinchZoomOptions & StaggerOptions & TimelineOptions & OrchestrationOptions & SpringOptions & KeyframeOptions & VariantsOptions & AnimationControlOptions & GestureAnimationOptions & DebugOptions & AccessibilityOptions & PresetOptions & SequenceOptions & GroupOptions & AdvancedOrchestrationOptions & GestureRecognitionOptions & RouterIntegrationOptions & FormIntegrationOptions & AnimationInspectorOptions & CanvasOptions & WebGLOptions & ShaderOptions & ThreeDOptions & ParticleOptions>
 
 export type MotionComponent = {
 	// <Motion />
@@ -754,4 +820,166 @@ export interface IntegrationState {
     activeAnimations: number
     totalElements: number
   }
+}
+
+// 🆕 Phase 10: Advanced Features - Canvas Integration
+export interface CanvasOptions {
+	canvas?: boolean
+	canvasWidth?: number
+	canvasHeight?: number
+	canvasContext?: '2d' | 'webgl' | 'webgl2'
+	canvasPixelRatio?: number
+	canvasAntialias?: boolean
+	canvasAlpha?: boolean
+	canvasDepth?: boolean
+	canvasStencil?: boolean
+	canvasPreserveDrawingBuffer?: boolean
+	canvasPowerPreference?: 'default' | 'high-performance' | 'low-power'
+	canvasFailIfMajorPerformanceCaveat?: boolean
+	onCanvasReady?: (canvas: HTMLCanvasElement, context: CanvasRenderingContext2D | WebGLRenderingContext | WebGL2RenderingContext) => void
+	onCanvasResize?: (width: number, height: number) => void
+	onCanvasRender?: (context: CanvasRenderingContext2D | WebGLRenderingContext | WebGL2RenderingContext, deltaTime: number) => void
+}
+
+export interface CanvasState {
+	canvas: HTMLCanvasElement | null
+	context: CanvasRenderingContext2D | WebGLRenderingContext | WebGL2RenderingContext | null
+	width: number
+	height: number
+	pixelRatio: number
+	isRendering: boolean
+	frameCount: number
+	lastFrameTime: number
+}
+
+// 🆕 Phase 10: Advanced Features - WebGL Support
+export interface WebGLOptions {
+	webgl?: boolean
+	webglVersion?: '1.0' | '2.0'
+	webglVertexShader?: string
+	webglFragmentShader?: string
+	webglAttributes?: Record<string, { size: number; type: number; normalized?: boolean; stride?: number; offset?: number }>
+	webglUniforms?: Record<string, { type: 'float' | 'int' | 'bool' | 'vec2' | 'vec3' | 'vec4' | 'mat2' | 'mat3' | 'mat4'; value: any }>
+	webglTextures?: Record<string, { source: HTMLImageElement | HTMLCanvasElement | HTMLVideoElement; target?: number; level?: number; internalFormat?: number; format?: number; type?: number }>
+	webglBlendMode?: 'add' | 'subtract' | 'reverse-subtract' | 'min' | 'max'
+	webglDepthTest?: boolean
+	webglCullFace?: 'front' | 'back' | 'front-and-back'
+	webglFrontFace?: 'cw' | 'ccw'
+	onWebGLReady?: (gl: WebGLRenderingContext | WebGL2RenderingContext, program: WebGLProgram) => void
+	onWebGLRender?: (gl: WebGLRenderingContext | WebGL2RenderingContext, program: WebGLProgram, deltaTime: number) => void
+}
+
+export interface WebGLState {
+	gl: WebGLRenderingContext | WebGL2RenderingContext | null
+	program: WebGLProgram | null
+	attributes: Record<string, number>
+	uniforms: Record<string, WebGLUniformLocation | null>
+	textures: Record<string, WebGLTexture | null>
+	buffers: Record<string, WebGLBuffer | null>
+	vao: WebGLVertexArrayObject | null
+	isInitialized: boolean
+}
+
+// 🆕 Phase 10: Advanced Features - Shader System
+export interface ShaderOptions {
+	shader?: boolean
+	shaderType?: 'vertex' | 'fragment' | 'compute'
+	shaderSource?: string
+	shaderPrecision?: 'lowp' | 'mediump' | 'highp'
+	shaderExtensions?: string[]
+	shaderUniforms?: Record<string, ShaderUniform>
+	shaderAttributes?: Record<string, ShaderAttribute>
+	shaderVaryings?: Record<string, ShaderVarying>
+	onShaderCompile?: (shader: WebGLShader, success: boolean) => void
+	onShaderLink?: (program: WebGLProgram, success: boolean) => void
+}
+
+export interface ShaderUniform {
+	type: 'float' | 'int' | 'bool' | 'vec2' | 'vec3' | 'vec4' | 'mat2' | 'mat3' | 'mat4' | 'sampler2D' | 'samplerCube'
+	value: number | number[] | boolean
+	location?: WebGLUniformLocation
+}
+
+export interface ShaderAttribute {
+	type: 'float' | 'vec2' | 'vec3' | 'vec4'
+	size: number
+	normalized?: boolean
+	stride?: number
+	offset?: number
+	buffer?: WebGLBuffer
+	location?: number
+}
+
+export interface ShaderVarying {
+	type: 'float' | 'vec2' | 'vec3' | 'vec4'
+	interpolation?: 'smooth' | 'flat' | 'noperspective'
+}
+
+// 🆕 Phase 10: Advanced Features - 3D Animation Support
+export interface ThreeDOptions {
+	threeD?: boolean
+	threeDPerspective?: number
+	threeDRotateX?: number
+	threeDRotateY?: number
+	threeDRotateZ?: number
+	threeDTranslateX?: number
+	threeDTranslateY?: number
+	threeDTranslateZ?: number
+	threeDScaleX?: number
+	threeDScaleY?: number
+	threeDScaleZ?: number
+	threeDMatrix?: number[]
+	threeDMatrixAuto?: boolean
+	onThreeDUpdate?: (matrix: number[]) => void
+}
+
+export interface ThreeDState {
+	matrix: number[]
+	perspective: number
+	rotation: { x: number; y: number; z: number }
+	translation: { x: number; y: number; z: number }
+	scale: { x: number; y: number; z: number }
+	isDirty: boolean
+}
+
+// 🆕 Phase 10: Advanced Features - Particle System
+export interface ParticleOptions {
+	particles?: boolean
+	particleCount?: number
+	particleSize?: number | { min: number; max: number }
+	particleColor?: string | string[] | { r: number; g: number; b: number; a: number }
+	particleVelocity?: { x: number; y: number; z: number } | { min: { x: number; y: number; z: number }; max: { x: number; y: number; z: number } }
+	particleLife?: number | { min: number; max: number }
+	particleGravity?: { x: number; y: number; z: number }
+	particleEmission?: 'continuous' | 'burst' | 'explosion'
+	particleEmissionRate?: number
+	particleEmissionBurst?: number
+	onParticleCreate?: (particle: Particle) => void
+	onParticleUpdate?: (particle: Particle, deltaTime: number) => void
+	onParticleDestroy?: (particle: Particle) => void
+}
+
+export interface Particle {
+	id: number
+	position: { x: number; y: number; z: number }
+	velocity: { x: number; y: number; z: number }
+	acceleration: { x: number; y: number; z: number }
+	size: number
+	color: { r: number; g: number; b: number; a: number }
+	life: number
+	maxLife: number
+	age: number
+	active: boolean
+}
+
+export interface ParticleState {
+	particles: Particle[]
+	emitter: { x: number; y: number; z: number }
+	emissionRate: number
+	emissionBurst: number
+	emissionType: 'continuous' | 'burst' | 'explosion'
+	gravity: { x: number; y: number; z: number }
+	isEmitting: boolean
+	particleCount: number
+	maxParticles: number
 }

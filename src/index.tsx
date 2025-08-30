@@ -27,3 +27,4 @@ export * from "./orchestration/advanced.js"
 
 // 🆕 Phase 9: Integration & Polish
 export * from "./integration/index.js"
+export * from "./canvas/index.js"
